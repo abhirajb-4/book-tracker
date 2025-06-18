@@ -1,25 +1,14 @@
-import { useState } from "react"
+import { useContext } from "react";
+import { BookContext } from "./BookContext";
+import { LoggerContext } from "./LoggerContext";
 
+export const useBookHook = () => useContext(BookContext);
 
-export const userSearchHook =(books) =>{
-    const [results, setResults] = useState([]);
-    const [loading,setLoading] = useState(false);
+export const useLoggerHook = () => useContext(LoggerContext);
 
-    const search =(query) =>{
-        setLoading(true);
-        setTimeout(
-            () =>{
-                const lowerQuery = query.toLowerCase();
-                setResults(
-                    books.filter(
-                        (b) => b.title.toLowerCase().includes(lowerQuery)||
-                        b.author.toLowerCase().includes(lowerQuery)     
-                            )
-                );
-                setLoading(false);
-            }
-
-        ,1000)
-    };
-    return {results,search,loading};
+export const userSearchHook = (books) => {
+  return (query) => books.filter(book => 
+    book.title.toLowerCase().includes(query.toLowerCase()) || 
+    book.author.toLowerCase().includes(query.toLowerCase())
+  );
 };

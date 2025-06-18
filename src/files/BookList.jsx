@@ -7,14 +7,13 @@ const BookList = () => {
   const { log } = useLoggerHook();
 
   const handleAddBook = (title, author) => {
-    if (!title || !author) return;
-    addBook({ title, author });
-    log(`Added book: ${title}`);
+    addBook(title, author);
+    log(`Book added: ${title} by ${author}`);
   };
 
   const handleRemoveBook = (title) => {
     removeBook(title);
-    log(`Removed book: ${title}`);
+    log(`Book removed: ${title}`);
   };
 
   useEffect(() => {
@@ -44,9 +43,11 @@ const AddBookForm = ({ onAdd }) => {
 
   const submit = (e) => {
     e.preventDefault();
-    onAdd(title, author);
-    setTitle("");
-    setAuthor("");
+    if (title && author) {
+      onAdd(title, author);
+      setTitle("");
+      setAuthor("");
+    }
   };
 
   return (
